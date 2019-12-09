@@ -1,16 +1,23 @@
 node {
     try {
+        def goHome
         stage('Checkout') {
             cleanWs()
             checkout scm
         }
         stage('Test') {
-            sh 'go test -v 2>&1 | go-junit-report > report.xml'
+            goHome = tool name: 'go', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+
+            withEnv(["GO_HOME=$goHome"]) {
+                sh '"$GO_HOME/go" test'
+            }
+//            sh 'go test -v 2>&1 | go-junit-report > report.xml'
         }
         stage("Package") {
             try {
-                sh 'cd app/'
-                sh 'go build'
+                withEnv(["GO_HOME=$goHome"]) {
+                    sh '"$GO_HOME/go" build'
+                }
             } catch (e) {
                 echo e.message
             } finally {

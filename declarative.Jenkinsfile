@@ -10,7 +10,8 @@ pipeline {
     }
 
     environment {
-        NOOP = 'noop'
+        GO = tool name: 'go', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+        PATH = "${GO}:$PATH"
     }
 
     library {
