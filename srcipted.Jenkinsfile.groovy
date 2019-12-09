@@ -1,4 +1,4 @@
-node {
+node('jenkins-jenkins-slave') {
     try {
         def goHome
         stage('Checkout') {
@@ -9,20 +9,13 @@ node {
             goHome = tool name: 'go', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
 
             withEnv(["GO_HOME=$goHome"]) {
-                sh '"$GO_HOME/go" test'
+                sh '"$GO_HOME/go" get -u github.com/jstemmer/go-junit-report'
+                sh '"$GO_HOME/go" test -v 2>&1 | go-junit-report > report.xml'
             }
-//            sh 'go test -v 2>&1 | go-junit-report > report.xml'
         }
         stage("Package") {
-            try {
-                withEnv(["GO_HOME=$goHome"]) {
-                    sh '"$GO_HOME/go" build'
-                }
-            } catch (e) {
-                echo e.message
-            } finally {
-                junit '*.xml'
-                archiveArtifacts 'app'
+            withEnv(["GO_HOME=$goHome"]) {
+                sh '"$GO_HOME/go" build'
             }
         }
         stage("Publish") {
@@ -42,7 +35,8 @@ node {
         switch (currentBuild.result) {
             case 'SUCCESS':
                 echo "SUCCESS actions"
-                junit ''
+                junit '*.xml'
+                archiveArtifacts 'app'
                 break
         }
     }
