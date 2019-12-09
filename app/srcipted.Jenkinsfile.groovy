@@ -1,9 +1,8 @@
 node {
     try {
         stage('Checkout') {
-//            cleanWs()
-            // TODO: change to scm, git doesn't inject env variables
-            git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+            cleanWs()
+            checkout scm
         }
         stage('Test') {
             sh 'go test -v 2>&1 | go-junit-report > report.xml'
