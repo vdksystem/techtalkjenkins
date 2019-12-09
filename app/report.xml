@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
-	<testsuite tests="1" failures="0" time="0.042" name="_/Users/dkuleshov/devops/lohika/techTalk/jenkins/app">
-		<properties>
-			<property name="go.version" value="go1.12.7"></property>
-		</properties>
-		<testcase classname="app" name="TestHealthCheckHandler" time="0.000"></testcase>
-	</testsuite>
-</testsuites>
