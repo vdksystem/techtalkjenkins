@@ -1,0 +1,26 @@
+master:
+  JCasC:
+    enabled: true
+    defaultConfig: true
+    configScripts:
+      welcome-message: |
+       jenkins:
+         systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+  sidecars:
+    configAutoReload:
+      enabled: true
+  adminPassword: admin
+  installPlugins:
+    - kubernetes:1.21.2
+    - workflow-job:2.36
+    - workflow-aggregator:2.6
+    - credentials-binding:1.20
+    - git:4.0.0
+    - kubernetes-credentials-provider:0.13
+    - ws-cleanup:0.37
+    - pipeline-utility-steps:2.3.1
+    - job-dsl:1.76
+    - github:1.29.5
+    - custom-tools-plugin:0.7
+persistence:
+  enabled: false
