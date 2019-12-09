@@ -9,6 +9,7 @@ node {
         }
         stage("Package") {
             try {
+                sh 'cd app/'
                 sh 'go build'
             } catch (e) {
                 echo e.message
