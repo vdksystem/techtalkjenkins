@@ -8,7 +8,7 @@ spec:
     command: ['cat']
     tty: true
 """) {
-    node('jenkins-jenkins-slave') {
+    node(POD_LABEL) {
         try {
             def goHome
             stage('Checkout') {
