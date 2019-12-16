@@ -23,7 +23,7 @@ spec:
             }
             stage("Package") {
                 container('golang') {
-                    sh '"$GO_HOME/go" build'
+                    sh 'go build'
                 }
             }
             stage("Publish") {
