@@ -28,13 +28,13 @@ spec:
             }
             stage("Publish") {
                 if (BRANCH_NAME == 'master') {
-                    sh "aws ecr get-login --no-include-email"
-                    sh "docker push"
+                    sh "docker pull ubuntu:16.04"
+                    sh "docker push dcr-docker-registry:5000/ubuntu"
                 }
             }
             stage("Deploy") {
                 if (BRANCH_NAME == 'master') {
-                    sh "deploy to kubernetes"
+                    echo "deploy to kubernetes"
                 }
             }
         } catch (err) {
