@@ -17,8 +17,8 @@ spec:
             }
             stage('Test') {
                 container('golang') {
-                    sh '"$GO_HOME/go" get -u github.com/jstemmer/go-junit-report'
-                    sh '"$GO_HOME/go" test -v 2>&1 | go-junit-report > report.xml'
+                    sh 'go get -u github.com/jstemmer/go-junit-report'
+                    sh 'go test -v 2>&1 | go-junit-report > report.xml'
                 }
             }
             stage("Package") {
