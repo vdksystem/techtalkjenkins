@@ -1,4 +1,5 @@
 node(POD_LABEL) {
+    def GO = tool name: 'go', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
     try {
         def goHome
         stage('Checkout') {
@@ -6,8 +7,10 @@ node(POD_LABEL) {
             checkout scm
         }
         stage('Test') {
-            sh 'go get -u github.com/jstemmer/go-junit-report'
-            sh 'go test -v 2>&1 | go-junit-report > report.xml'
+            withEnv(["PATH=${GO}:${PATH}"]) {
+                sh 'go get -u github.com/jstemmer/go-junit-report'
+                sh 'go test -v 2>&1 | go-junit-report > report.xml'
+            }
         }
         stage("Package") {
             sh 'go build'
