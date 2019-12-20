@@ -6,10 +6,8 @@ node('jenkins-jenkins-slave') {
             checkout scm
         }
         stage('Test') {
-            container('golang') {
-                sh 'go get -u github.com/jstemmer/go-junit-report'
-                sh 'go test -v 2>&1'
-            }
+            sh 'go get -u github.com/jstemmer/go-junit-report'
+            sh 'go test -v 2>&1'
         }
         stage("Package") {
             sh 'go build'
