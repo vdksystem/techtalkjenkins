@@ -14,7 +14,7 @@ node('jenkins-jenkins-slave') {
         }
         stage("Publish") {
             if (BRANCH_NAME == 'master') {
-                sh "docker build dcr-docker-registry:5000/app:v1"
+                sh "docker build -t dcr-docker-registry:5000/app:v1 ."
                 sh "docker push dcr-docker-registry:5000/app:v1"
             }
         }
