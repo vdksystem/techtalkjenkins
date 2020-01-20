@@ -2,11 +2,43 @@ master:
   JCasC:
     enabled: true
     pluginVersion: 1.35
-    defaultConfig: true
+#    defaultConfig: true
+#    enableXmlConfig: false
     configScripts:
       welcome-message: |
        jenkins:
          systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+      cloud: |
+        jenkins:
+          clouds:
+          - kubernetes:
+              containerCapStr: "10"
+              jenkinsTunnel: "jenkins-agent:50000"
+              jenkinsUrl: "http://jenkins:8080"
+              maxRequestsPerHostStr: "32"
+              name: "kubernetes"
+              namespace: "default"
+              serverUrl: "https://kubernetes.default"
+              templates:
+              - containers:
+                - args: "^${computer.jnlpmac} ^${computer.name}"
+                  envVars:
+                  - containerEnvVar:
+                      key: "JENKINS_URL"
+                      value: "http://jenkins.default.svc.cluster.local:8080"
+                  image: "vdksystem/jenkins-slave:techtalks"
+                  name: "jnlp"
+                  resourceLimitCpu: "512m"
+                  resourceLimitMemory: "2Gi"
+                  resourceRequestCpu: "512m"
+                  resourceRequestMemory: "512Mi"
+                  workingDir: "/home/jenkins/agent"
+                label: "jenkins-jenkins-slave"
+                name: "default"
+                nodeUsageMode: "NORMAL"
+                podRetention: "never"
+                serviceAccount: "default"
+                yamlMergeStrategy: "override"
       shared-libs: |
         unclassified:
           globalLibraries:
@@ -62,7 +94,7 @@ master:
                     }
                     projectFactories {
                       workflowMultiBranchProjectFactory {
-                        scriptPath("app/declarative.Jenkinsfile")
+                        scriptPath("declarative.Jenkinsfile")
                       }
                     }
                   }

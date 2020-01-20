@@ -7,11 +7,6 @@ pipeline {
         skipDefaultCheckout()
     }
 
-    environment {
-        GO = tool name: 'go', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-        PATH = "${GO}:$PATH"
-    }
-
     stages {
         stage("Checkout") {
             steps {
@@ -22,7 +17,6 @@ pipeline {
         stage("Test") {
             steps {
                 script {
-                    sh 'go get -u github.com/jstemmer/go-junit-report'
                     sh 'go test -v 2>&1'
                 }
                 post {
