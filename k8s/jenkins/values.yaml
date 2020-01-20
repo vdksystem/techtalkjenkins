@@ -28,17 +28,22 @@ master:
                       value: "http://jenkins.default.svc.cluster.local:8080"
                   image: "vdksystem/jenkins-slave:techtalks"
                   name: "jnlp"
+                  privileged: true
                   resourceLimitCpu: "512m"
                   resourceLimitMemory: "2Gi"
                   resourceRequestCpu: "512m"
                   resourceRequestMemory: "512Mi"
                   workingDir: "/home/jenkins/agent"
                 label: "jenkins-jenkins-slave"
-                name: "default"
+                name: "jenkins-slave"
                 nodeUsageMode: "NORMAL"
                 podRetention: "never"
                 serviceAccount: "default"
                 yamlMergeStrategy: "override"
+                volumes:
+                - hostPathVolume:
+                    hostPath: "/var/run/docker.sock"
+                    mountPath: "/var/run/docker.sock"
       shared-libs: |
         unclassified:
           globalLibraries:
