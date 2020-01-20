@@ -6,7 +6,7 @@ To push images you need docker credentials.
 
 To access GitHub you need credentials.
 Scanning works with https credentials
-
+`k apply -f ~/.ssh/lohika/techtalk/github-token.yaml`
 Git operations could work both with https and ssh credentials
 `k create secret generic github-ssh-access --from-file=privateKey=${HOME}/.ssh/lohika/techtalk/deployKey --from-literal=username=git`
 `k label secret github-ssh-access "jenkins.io/credentials-type"="basicSSHUserPrivateKey"`

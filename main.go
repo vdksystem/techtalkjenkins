@@ -1,4 +1,4 @@
-package jenkins
+package main
 
 import (
 	"net/http"

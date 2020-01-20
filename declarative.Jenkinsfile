@@ -14,10 +14,11 @@ pipeline {
                 checkout scm
             }
         }
-        stage("Test") {
+        stage("Build") {
             steps {
                 script {
                     sh 'go test -v 2>&1 | go-junit-report > report.xml'
+                    sh 'go build -o app'
                 }
             }
             post {
