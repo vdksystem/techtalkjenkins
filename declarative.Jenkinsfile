@@ -32,8 +32,9 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-credentials') {
-                        sh "docker build -t vdksystem/techtalks:latest ."
-                        sh "docker push vdksystem/techtalks:latest"
+                        def appImage = docker.build("vdksystem/techtalks:${env.BUILD_ID}")
+                        appImage.push()
+                        appImage.push('latest')
                     }
                 }
             }
@@ -44,7 +45,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "deploy to kubernetes"
+                    echo "deploy to kubernetes"
                 }
             }
         }
