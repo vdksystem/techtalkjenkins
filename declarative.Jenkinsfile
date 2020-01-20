@@ -45,7 +45,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploy to kubernetes"
+                    helm.upgrade(name = 'techtalks', args = "--set image.tag = ${env.BUILD_ID}")
                 }
             }
         }
