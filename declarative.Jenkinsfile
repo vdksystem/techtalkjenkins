@@ -31,8 +31,8 @@ pipeline {
         stage("Package") {
             steps {
                 script {
-                    sh "docker build -t dcr-docker-registry:5000/app:v1 ."
-                    sh "docker push dcr-docker-registry:5000/app:v1"
+                    sh "docker build -t vdksystem/techtalks:latest ."
+                    sh "docker push vdksystem/techtalks:latest"
                 }
             }
         }
