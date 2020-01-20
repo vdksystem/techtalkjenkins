@@ -8,9 +8,8 @@ USER root
 RUN apt-get update && apt-get install -y \
       gcc \
       python3-pip \
-      postgresql-client && \
       pip3 install awscli && \
-      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
+      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash -s -- --version v2.13.1
 
 COPY --from=kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/kubectl
 
