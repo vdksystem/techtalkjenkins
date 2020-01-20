@@ -1,20 +1,16 @@
+@Library('jsl') _
+
 pipeline {
-    agent {
-        label 'default'
-    }
+    agent any
     options {
         disableConcurrentBuilds()
         timestamps()
         skipDefaultCheckout()
-        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '365', numToKeepStr: '')
     }
 
     environment {
         GO = tool name: 'go', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
         PATH = "${GO}:$PATH"
-    }
-
-    library {
     }
 
     stages {
@@ -27,30 +23,22 @@ pipeline {
         stage("Test") {
             steps {
                 script {
-                    sh "go test"
+                    sh 'go get -u github.com/jstemmer/go-junit-report'
+                    sh 'go test -v 2>&1'
                 }
                 post {
                     success {
-                        junit allowEmptyResults: true, testResults: '*/target/surefire-reports/*TestSuite.xml'
+                        junit '*.xml'
+                        archiveArtifacts 'app'
                     }
                 }
             }
         }
-        stage("Build") {
+        stage("Package") {
             steps {
                 script {
-                    sh "go build"
-                }
-            }
-        }
-        stage("Publish") {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    sh "aws ecr get-login --no-include-email"
-                    sh "docker push"
+                    sh "docker build -t dcr-docker-registry:5000/app:v1 ."
+                    sh "docker push dcr-docker-registry:5000/app:v1"
                 }
             }
         }

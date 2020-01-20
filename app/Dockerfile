@@ -1,6 +1,6 @@
 FROM golang:alpine
 WORKDIR /code
-COPY . .
+COPY .. .
 RUN go build -o main
 
 FROM alpine:3.7

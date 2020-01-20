@@ -1,6 +1,7 @@
 master:
   JCasC:
     enabled: true
+    pluginVersion: 1.35
     defaultConfig: true
     configScripts:
       welcome-message: |
@@ -20,7 +21,7 @@ master:
     - ws-cleanup:0.37
     - pipeline-utility-steps:2.3.1
     - job-dsl:1.76
-    - github:1.29.5
+    - github-organization-folder:1.6
     - custom-tools-plugin:0.7
 persistence:
   enabled: false
