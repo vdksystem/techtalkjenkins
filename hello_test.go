@@ -29,7 +29,7 @@ func TestHealthCheckHandler(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `<h1>Welcom to Lohika TechTalk!</h1>`
+	expected := `<h1>Welcom to Lohika TechTalks!</h1>`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
