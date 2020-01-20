@@ -19,11 +19,11 @@ pipeline {
                 script {
                     sh 'go test -v 2>&1'
                 }
-                post {
-                    success {
-                        junit '*.xml'
-                        archiveArtifacts 'app'
-                    }
+            }
+            post {
+                success {
+                    junit '*.xml'
+                    archiveArtifacts 'app'
                 }
             }
         }
