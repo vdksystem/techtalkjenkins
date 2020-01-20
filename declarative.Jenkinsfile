@@ -17,7 +17,7 @@ pipeline {
         stage("Test") {
             steps {
                 script {
-                    sh 'go test -v 2>&1'
+                    sh 'go test -v 2>&1 | go-junit-report > report.xml'
                 }
             }
             post {
