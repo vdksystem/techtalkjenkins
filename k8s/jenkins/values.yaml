@@ -26,6 +26,9 @@ master:
                   - containerEnvVar:
                       key: "JENKINS_URL"
                       value: "http://jenkins.default.svc.cluster.local:8080"
+                  - envVar:
+                      key: "DOCKER_HOST"
+                      value: "tcp://localhost:2375"
                   image: "vdksystem/jenkins-slave:techtalks"
                   name: "jnlp"
                   privileged: true
@@ -33,6 +36,15 @@ master:
                   resourceLimitMemory: "2Gi"
                   resourceRequestCpu: "512m"
                   resourceRequestMemory: "512Mi"
+                  workingDir: "/home/jenkins/agent"
+                - envVars:
+                  - envVar:
+                      key: "DOCKER_TLS_CERTDIR"
+                      value: ""
+                  image: "docker:19.03.3-dind"
+                  name: "dind"
+                  privileged: true
+                  ttyEnabled: true
                   workingDir: "/home/jenkins/agent"
                 label: "jenkins-jenkins-slave"
                 name: "jenkins-slave"

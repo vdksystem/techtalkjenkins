@@ -31,8 +31,10 @@ pipeline {
         stage("Package") {
             steps {
                 script {
-                    sh "docker build -t vdksystem/techtalks:latest ."
-                    sh "docker push vdksystem/techtalks:latest"
+                    withDockerRegistry(credentialsId: 'docker-credentials') {
+                        sh "docker build -t vdksystem/techtalks:latest ."
+                        sh "docker push vdksystem/techtalks:latest"
+                    }
                 }
             }
         }
