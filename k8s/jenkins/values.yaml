@@ -7,6 +7,41 @@ master:
       welcome-message: |
        jenkins:
          systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+      jobs: |
+        jobs:
+          - script: >
+              organizationFolder('example') {
+                  description('Demo project for Odessa TechTalks')
+                  displayName('TechTalks')
+                  triggers {
+                      periodicFolderTrigger {
+                      interval("3600")
+                      }
+                  }
+                  organizations {
+                    github {
+                      repoOwner("vdksystem")
+                      credentialsId("github-token")
+                      traits {
+                        cleanBeforeCheckoutTrait()
+                        sourceRegexFilter {
+                          regex("techtalkjenkins")
+                        }
+                        gitHubBranchDiscovery {
+                          strategyId(1)
+                        }
+                        originPullRequestDiscoveryTrait {
+                          strategyId(1)
+                        }
+                      }
+                    }
+                    projectFactories {
+                      workflowMultiBranchProjectFactory {
+                        scriptPath("app/declarative.Jenkinsfile")
+                      }
+                    }
+                  }
+              }
   sidecars:
     configAutoReload:
       enabled: true
