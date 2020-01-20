@@ -14,17 +14,15 @@ pipeline {
                 checkout scm
             }
         }
-        stage("Build") {
+        stage("Test") {
             steps {
                 script {
-                    sh 'go test -v 2>&1 | go-junit-report > report.xml'
-                    sh 'go build -o app'
+                    golang.test()
                 }
             }
             post {
                 success {
                     junit '*.xml'
-                    archiveArtifacts 'app'
                 }
             }
         }
