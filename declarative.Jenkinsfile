@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    helm.upgrade('techtalks', "--set image.tag = ${env.BUILD_ID}")
+                    helm.upgrade("techtalks", "techtalks", "--set image.tag=${env.BUILD_ID}")
                 }
             }
         }
