@@ -7,6 +7,31 @@ master:
       welcome-message: |
        jenkins:
          systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+      shared-libs: |
+        unclassified:
+          globalLibraries:
+            libraries:
+            - defaultVersion: "master"
+              includeInChangesets: false
+              name: "jsl"
+              retriever:
+                modernSCM:
+                  scm:
+                    github:
+                      configuredByUrl: true
+                      credentialsId: "github-token"
+                      id: "f82c1b68-4b36-4f85-beaf-5a98bbcd11c0"
+                      repoOwner: "vdksystem"
+                      repository: "techtalkjenkins-jsl"
+                      repositoryUrl: "https://github.com/vdksystem/techtalkjenkins-jsl.git"
+                      traits:
+                      - gitHubBranchDiscovery:
+                          strategyId: 1
+                      - originPullRequestDiscoveryTrait:
+                          strategyId: 1
+                      - gitHubForkDiscovery:
+                          strategyId: 1
+                          trust: "gitHubTrustPermissions"
       jobs: |
         jobs:
           - script: >
@@ -58,5 +83,6 @@ master:
     - job-dsl:1.76
     - github-organization-folder:1.6
     - custom-tools-plugin:0.7
+    - timestamper:1.10
 persistence:
   enabled: false
